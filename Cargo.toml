@@ -1,17 +1,14 @@
 [package]
-name = "bitmask-core"
-version = "0.7.0-beta.10"
+name = "rgb-core"
+version = "0.1.0"
 authors = [
-    "Jose Diego Robles <jose@diba.io>",
-    "Hunter Trujillo <hunter@diba.io>",
-    "Francisco Calderón <francisco@diba.io>",
-    "Armando Dutra <armando@diba.io>",
+    "alice <alice@xrgb.xyz>",
 ]
-description = "Core functionality for the BitMask wallet"
+description = "Core functionality for the rgb"
 edition = "2021"
 license = "MIT"
-homepage = "https://bitmask.app"
-repository = "https://github.com/diba-io/bitmask-core"
+homepage = "https://www.xrgb.xyz/"
+repository = "https://github.com/XRGB/rgb-core.git"
 
 [lib]
 crate-type = ["cdylib", "rlib"]

@@ -153,9 +153,8 @@ pub async fn switch_network(network_str: &str) -> Result<()> {
 pub static LNDHUB_ENDPOINT: Lazy<RwLock<String>> =
     Lazy::new(|| RwLock::new(dot_env("LNDHUB_ENDPOINT")));
 
-// bitmask node
-pub static BITMASK_ENDPOINT: Lazy<RwLock<String>> =
-    Lazy::new(|| RwLock::new(dot_env("BITMASK_ENDPOINT")));
+// rgb node
+pub static RGB_ENDPOINT: Lazy<RwLock<String>> = Lazy::new(|| RwLock::new(dot_env("RGB_ENDPOINT")));
 
 // rgb proxy node
 pub static RGB_PROXY_ENDPOINT: Lazy<RwLock<String>> =
@@ -168,7 +167,7 @@ pub static CARBONADO_ENDPOINT: Lazy<RwLock<String>> =
 pub async fn get_env(key: &str) -> String {
     match key {
         "LNDHUB_ENDPOINT" => LNDHUB_ENDPOINT.read().await.to_string(),
-        "BITMASK_ENDPOINT" => BITMASK_ENDPOINT.read().await.to_string(),
+        "RGB_ENDPOINT" => RGB_ENDPOINT.read().await.to_string(),
         "CARBONADO_ENDPOINT" => CARBONADO_ENDPOINT.read().await.to_string(),
         "BITCOIN_EXPLORER_API_MAINNET" => BITCOIN_EXPLORER_API_MAINNET.read().await.to_string(),
         "BITCOIN_EXPLORER_API_TESTNET" => BITCOIN_EXPLORER_API_TESTNET.read().await.to_string(),
@@ -188,7 +187,7 @@ pub async fn get_env(key: &str) -> String {
 pub async fn set_env(key: &str, value: &str) {
     match key {
         "LNDHUB_ENDPOINT" => *LNDHUB_ENDPOINT.write().await = value.to_owned(),
-        "BITMASK_ENDPOINT" => *BITMASK_ENDPOINT.write().await = value.to_owned(),
+        "RGB_ENDPOINT" => *RGB_ENDPOINT.write().await = value.to_owned(),
         "CARBONADO_ENDPOINT" => *CARBONADO_ENDPOINT.write().await = value.to_owned(),
         "BITCOIN_EXPLORER_API_MAINNET" => {
             *BITCOIN_EXPLORER_API_MAINNET.write().await = value.to_owned()

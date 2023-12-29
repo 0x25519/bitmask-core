@@ -343,7 +343,7 @@ pub use client::{
 #[cfg(target_arch = "wasm32")]
 mod client {
     use crate::{
-        constants::{BITMASK_ENDPOINT, NETWORK},
+        constants::{NETWORK, RGB_ENDPOINT},
         rgb::structs::{
             MediaMetadata, RgbProxyConsigCarbonadoReq, RgbProxyConsigFileReq, RgbProxyConsigRes,
             RgbProxyConsigUploadRes, RgbProxyMediaRes,
@@ -358,7 +358,7 @@ mod client {
         request: RgbProxyConsigFileReq,
     ) -> Result<RgbProxyConsigUploadRes, ProxyServerError> {
         let network = NETWORK.read().await.to_string();
-        let endpoint = BITMASK_ENDPOINT.read().await.to_string();
+        let endpoint = RGB_ENDPOINT.read().await.to_string();
 
         let name = request.clone().file_name;
         let url = format!("{endpoint}/proxy/consignment/{network}-{name}");
@@ -375,7 +375,7 @@ mod client {
     pub async fn proxy_consig_retrieve(
         request_id: &str,
     ) -> Result<Option<RgbProxyConsigRes>, ProxyServerError> {
-        let endpoint = BITMASK_ENDPOINT.read().await.to_string();
+        let endpoint = RGB_ENDPOINT.read().await.to_string();
 
         let request_id = request_id.replace("utxob:", "");
         let url = format!("{endpoint}/proxy/consignment/{request_id}");
@@ -394,7 +394,7 @@ mod client {
     pub async fn proxy_media_retrieve(
         attachment_id: &str,
     ) -> Result<Option<RgbProxyMediaRes>, ProxyServerError> {
-        let endpoint = BITMASK_ENDPOINT.read().await.to_string();
+        let endpoint = RGB_ENDPOINT.read().await.to_string();
 
         let url = format!("{endpoint}/proxy/media/{attachment_id}");
         let response = get(&url, None)
@@ -411,7 +411,7 @@ mod client {
     pub async fn proxy_metadata_retrieve(
         attachment_id: &str,
     ) -> Result<Option<RgbProxyMediaRes>, ProxyServerError> {
-        let endpoint = BITMASK_ENDPOINT.read().await.to_string();
+        let endpoint = RGB_ENDPOINT.read().await.to_string();
 
         let url = format!("{endpoint}/proxy/media-metadata/{attachment_id}");
         let response = get(&url, None)
@@ -429,7 +429,7 @@ mod client {
         media: MediaItemRequest,
         encode: MediaEncode,
     ) -> Result<MediaMetadata, ProxyServerError> {
-        let endpoint = BITMASK_ENDPOINT.read().await.to_string();
+        let endpoint = RGB_ENDPOINT.read().await.to_string();
 
         let url = format!("{endpoint}/proxy/media-metadata");
         let body = MediaExtractRequest {
