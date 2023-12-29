@@ -138,6 +138,9 @@ serde = "1.0.189"
 serde_json = "1.0.107"
 toml = { version = "0.8.0", features = ["preserve_order"] }
 
+[profile.release]
+opt-level = 's'
+
 [patch.crates-io]
 # Remove after merge and release https://github.com/BP-WG/bitcoin_foundation/pull/20
 bitcoin_scripts = { git = "https://github.com/crisdut/bp-foundation", branch = "feat/bump-amplify-4" }
