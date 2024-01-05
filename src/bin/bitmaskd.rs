@@ -23,7 +23,8 @@ use axum::{
     Json, Router, TypedHeader,
 };
 use bitcoin_30::secp256k1::{ecdh::SharedSecret, PublicKey, SecretKey};
-use bitmask_core::{
+use log::{debug, error, info};
+use rgb_core::{
     bitcoin::{save_mnemonic, sign_and_publish_psbt_file},
     carbonado::{
         auctions_retrieve, auctions_store, handle_file, marketplace_retrieve, marketplace_store,
@@ -58,7 +59,6 @@ use bitmask_core::{
         SelfIssueRequest, SignPsbtRequest, WatcherRequest,
     },
 };
-use log::{debug, error, info};
 use tokio::{fs, time::sleep};
 use tower_http::cors::CorsLayer;
 
@@ -777,7 +777,7 @@ async fn key(Path(pk): Path<String>) -> Result<impl IntoResponse, AppError> {
 }
 
 async fn new_block() -> Result<impl IntoResponse, AppError> {
-    use bitmask_core::regtest::new_block;
+    use rgb_core::regtest::new_block;
     new_block();
 
     Ok("Ok")
@@ -786,7 +786,7 @@ async fn new_block() -> Result<impl IntoResponse, AppError> {
 async fn send_coins(
     Path((address, amount)): Path<(String, String)>,
 ) -> Result<impl IntoResponse, AppError> {
-    use bitmask_core::regtest::send_coins;
+    use rgb_core::regtest::send_coins;
     send_coins(&address, &amount);
 
     Ok("Ok")

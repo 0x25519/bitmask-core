@@ -608,6 +608,37 @@ pub mod rgb {
     }
 
     #[wasm_bindgen]
+    pub fn extract_transfer(transfer: String) -> Promise {
+        use amplify::confinement::LargeVec;
+        use rgbstd::validation::AnchoredBundle;
+
+        set_panic_hook();
+
+        #[derive(Clone, serde::Serialize, Debug)]
+        struct Transfer {
+            consig_id: String,
+            contract_id: String,
+            txid: String,
+            anchored_bundle: LargeVec<AnchoredBundle>,
+        }
+
+        future_to_promise(async move {
+            match crate::rgb::prebuild::prebuild_extract_transfer(&transfer) {
+                Ok(result) => {
+                    let val = Transfer {
+                        consig_id: result.consig_id,
+                        contract_id: result.contract_id,
+                        txid: result.txid.to_string(),
+                        anchored_bundle: result.transfer.bundles.clone(),
+                    };
+                    Ok(JsValue::from_string(serde_json::to_string(&val).unwrap()))
+                }
+                Err(err) => Err(JsValue::from_string(err.to_string())),
+            }
+        })
+    }
+
+    #[wasm_bindgen]
     pub fn get_contract(nostr_hex_sk: String, contract_id: String) -> Promise {
         set_panic_hook();
 
