@@ -42,7 +42,6 @@ use crate::{
         PublishedPsbtResponse, SatsInvoice, SecretString, SignPsbtRequest, SignedPsbtResponse,
         TransactionData, WalletData, WalletTransaction,
     },
-    trace,
 };
 
 // Minimum amount of satoshis to funding vault
@@ -263,19 +262,15 @@ pub async fn get_wallet_data(
         .await
         .get_address(AddressIndex::LastUnused)?
         .to_string();
-    info!(format!("address: {address}"));
     let balance = wallet.lock().await.get_balance()?;
-    info!(format!("balance: {balance:?}"));
     let utxos = wallet.lock().await.list_unspent().unwrap_or_default();
     let utxos: Vec<String> = utxos.into_iter().map(|x| x.outpoint.to_string()).collect();
-    trace!(format!("unspent: {utxos:#?}"));
 
     let mut transactions = wallet
         .lock()
         .await
         .list_transactions(true)
         .unwrap_or_default();
-    trace!(format!("transactions: {transactions:#?}"));
 
     transactions.sort_by(|a, b| {
         b.confirmation_time
@@ -305,8 +300,6 @@ pub async fn get_wallet_data(
             }
         })
         .collect();
-
-    trace!(format!("transactions: {transactions:#?}"));
 
     Ok(WalletData {
         address,
