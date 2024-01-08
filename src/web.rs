@@ -609,8 +609,8 @@ pub mod rgb {
 
     #[wasm_bindgen]
     pub fn extract_transfer(transfer: String) -> Promise {
-        use amplify::confinement::LargeVec;
-        use rgbstd::validation::AnchoredBundle;
+        use amplify::confinement::{LargeVec, SmallOrdMap};
+        use rgbstd::{containers::Terminal, contract::BundleId, validation::AnchoredBundle};
 
         set_panic_hook();
 
@@ -619,6 +619,7 @@ pub mod rgb {
             consig_id: String,
             contract_id: String,
             txid: String,
+            terminals: SmallOrdMap<BundleId, Terminal>,
             anchored_bundle: LargeVec<AnchoredBundle>,
         }
 
@@ -629,6 +630,7 @@ pub mod rgb {
                         consig_id: result.consig_id,
                         contract_id: result.contract_id,
                         txid: result.txid.to_string(),
+                        terminals: result.transfer.terminals.clone(),
                         anchored_bundle: result.transfer.bundles.clone(),
                     };
                     Ok(JsValue::from_string(serde_json::to_string(&val).unwrap()))

@@ -150,6 +150,8 @@ descriptor-wallet = { git = "https://github.com/crisdut/descriptor-wallet", bran
 # Remove after merge and release https://github.com/RGB-WG/rgb-wallet/pull/108
 rgb-wallet = { git = "https://github.com/crisdut/rgb-wallet", branch = "feat/improviments" }
 rgb-std = { git = "https://github.com/crisdut/rgb-wallet", branch = "feat/improviments" }
+# rgb-wallet = { path = "../rgb-wallet" }
+# rgb-std = { path = "../rgb-wallet/std" }
 
 # Remove after merge and release https://github.com/RGB-WG/rgb/pull/32
 rgb-contracts = { git = "https://github.com/crisdut/rgb", branch = "feat/improviments" }
